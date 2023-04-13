@@ -15,38 +15,46 @@
             </ui:define>
 
             <ui:define name="content">
-                <h:form>
-                    <h1><h:outputText value="Liste des clients"/></h1>
-                    <p:dataTable value="#{listeComptes.allComptes}"
-                                 var="item"
-                                 emptyMessage="Aucune compte trouvé"
-                                 paginator="true"
-                                 rows="4"
-                                 rowsPerPageTemplate="2,4,8,10"
-                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Id"/>
-                            </f:facet>
-                            <h:link outcome="mouvement?id=#{item.id}" 
-                                    value="#{item.id}"/>
-                        </p:column>
-                        <p:column sortBy="#{item.nom}" filterBy="#{item.nom}">
-                            <f:facet name="header">
-                                <h:outputText value="Nom"/>
-                            </f:facet>
-                            <h:outputText value="#{item.nom}"/>
-                        </p:column>
+                    <h:form>
+                        <h1><h:outputText value="Liste des clients"/></h1>
+                        <p:dataTable value="#{listeComptes.allComptes}"
+                                     var="item"
+                                     emptyMessage="Aucune compte trouvé"
+                                     paginator="true"
+                                     rows="4"
+                                     rowsPerPageTemplate="2,4,8,10"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                            <p:column style="width:50px;">
+                                <f:facet name="header">
+                                    <h:outputText value="Id"/>
+                                </f:facet>
+                                <h:link outcome="mouvement?id=#{item.id}" 
+                                        value="#{item.id}"/>
+                            </p:column>
+                            <p:column style="width:75px;" sortBy="#{item.nom}" filterBy="#{item.nom}">
+                                <f:facet name="header">
+                                    <h:outputText value="Nom"/>
+                                </f:facet>
+                                <h:outputText value="#{item.nom}"/>
+                            </p:column>
 
-                        <p:column sortBy="#{item.solde}">
-                            <f:facet name="header">
-                                <h:outputText value="Solde"/>
-                            </f:facet>
-                            <h:outputText value="#{item.solde}"/>
-                        </p:column>
-
-                    </p:dataTable>
-                </h:form>
+                            <p:column style="width:75px;" sortBy="#{item.solde}">
+                                <f:facet name="header">
+                                    <h:outputText value="Solde"/>
+                                </f:facet>
+                                <h:outputText value="#{item.solde}"/>
+                            </p:column>
+                            <p:column style="width:125px;" width="10">
+                                <f:facet name="header">
+                                    <h:outputText value="Opérations"/>
+                                </f:facet>
+                                <h:commandLink action="#{listeComptes.supprimerCompte(item)}"
+                                               title="Supprimer le compte de #{item.nom}" >
+                                    <h:graphicImage width="20" height="20" name="images/trash.png"/>
+                                </h:commandLink>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
                 <h:messages/>
             </ui:define>
 

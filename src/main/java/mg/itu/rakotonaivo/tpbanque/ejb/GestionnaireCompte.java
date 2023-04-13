@@ -39,9 +39,11 @@ public class GestionnaireCompte {
         TypedQuery<CompteBancaire> query = em.createNamedQuery("CompteBancaire.findAll", CompteBancaire.class);
         return query.getResultList();
     }
-    public CompteBancaire findById(long id){
+
+    public CompteBancaire findById(long id) {
         return em.find(CompteBancaire.class, id);
     }
+
     public void transferer(CompteBancaire source, CompteBancaire destination,
             int montant) {
         source.retirer(montant);
@@ -53,14 +55,18 @@ public class GestionnaireCompte {
     public CompteBancaire update(CompteBancaire compteBancaire) {
         return em.merge(compteBancaire);
     }
-    
+
     public void retirer(CompteBancaire compteBancaire, int montant) {
-      compteBancaire.retirer(montant);
-      update(compteBancaire);
+        compteBancaire.retirer(montant);
+        update(compteBancaire);
     }
-    
+
     public void deposer(CompteBancaire compteBancaire, int montant) {
-      compteBancaire.deposer(montant);
-      update(compteBancaire);
+        compteBancaire.deposer(montant);
+        update(compteBancaire);
+    }
+
+    public void supprimerCompte(CompteBancaire compte) {
+        em.remove(em.merge(compte));
     }
 }
