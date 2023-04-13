@@ -11,6 +11,7 @@ import jakarta.faces.view.ViewScoped;
 import java.io.Serializable;
 import mg.itu.rakotonaivo.tpbanque.ejb.GestionnaireCompte;
 import mg.itu.rakotonaivo.tpbanque.entities.CompteBancaire;
+import mg.itu.rakotonaivo.tpbanque.jsf.util.Util;
 
 /**
  *
@@ -23,10 +24,10 @@ public class Transfer implements Serializable {
     private long idSource;
     private long idDestination;
     private int montant;
-    
+
     @EJB
     GestionnaireCompte compteManager;
-    
+
     public Transfer() {
     }
 
@@ -49,16 +50,33 @@ public class Transfer implements Serializable {
     public int getMontant() {
         return montant;
     }
-    
 
     public void setMontant(int montant) {
         this.montant = montant;
     }
-    
-    public String doTransfer(){
+
+    public String doTransfer() {
         CompteBancaire source = compteManager.findById(idSource);
         CompteBancaire destination = compteManager.findById(idDestination);
+        boolean erreur = false;
+        if (source == null) {
+            Util.messageErreur("Aucun compte avec cet id !", "Aucun compte avec cet id !", "form:source");
+            erreur = true;
+        } else {
+            if (source.getSolde() < montant) { 
+               Util.messageErreur("Solde insuffisant : "+source.getSolde(), "Solde insuffisant", "form:montant");
+               erreur = true;
+            }
+        }
+        if (destination == null) {
+            Util.messageErreur("Aucun compte avec cet id !", "Aucun compte avec cet id !", "form:destination");
+            erreur = true;
+        }
+        if (erreur) {
+            return null;
+        }
         compteManager.transferer(source, destination, montant);
+        Util.addFlashInfoMessage("Transfert correctement effectué");
         return "listeComptes?&amp;faces-redirect=true";
     }
 }
