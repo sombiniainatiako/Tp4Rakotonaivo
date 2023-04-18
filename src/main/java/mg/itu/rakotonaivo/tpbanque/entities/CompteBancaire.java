@@ -66,11 +66,11 @@ public class CompteBancaire implements Serializable {
     public void retirer(int montant) {
         if (montant < solde) {
             solde -= montant;
-            operations.add(new OperationBancaire("Débit",montant));
+            operations.add(new OperationBancaire("Débit",-1*montant));
         } else {
             solde = 0;
             if(solde > 0){
-               operations.add(new OperationBancaire("Débit",solde)); 
+               operations.add(new OperationBancaire("Débit",-1*solde)); 
             }
         }
         
