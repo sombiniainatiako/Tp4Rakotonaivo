@@ -46,7 +46,7 @@
                             </p:column>
                             <p:column style="width:125px;" width="10">
                                 <f:facet name="header">
-                                    <h:outputText value="Opérations"/>
+                                    <h:outputText value="Actions"/>
                                 </f:facet>
                                 <h:commandLink action="#{listeComptes.supprimerCompte(item)}"
                                                title="Supprimer le compte de #{item.nom}" >
@@ -55,6 +55,17 @@
                                 <h:link outcome="changerNom?id=#{item.id}"
                                                title="modification nom de #{item.nom}" >
                                     <h:graphicImage width="20" height="20" name="images/edit.png"/>
+                                </h:link>
+                            </p:column>
+                            <p:column style="width:125px;" width="10">
+                                <f:facet name="header">
+                                    <h:outputText value="Historiques"/>
+                                    <br/>
+                                    <h:outputText value="d'opérations"/>
+                                </f:facet>
+                                <h:link outcome="operations"
+                                               value="Détails" >
+                                    <f:param name="id" value="#{item.id}" />
                                 </h:link>
                             </p:column>
                         </p:dataTable>
